@@ -5091,6 +5091,7 @@ SYSCALL_DEFINE0(sched_yield)
 	return 0;
 }
 
+#ifndef CONFIG_PREEMPT
 int __sched _cond_resched(void)
 {
 	if (should_resched(0)) {
@@ -5100,6 +5101,7 @@ int __sched _cond_resched(void)
 	return 0;
 }
 EXPORT_SYMBOL(_cond_resched);
+#endif
 
 /*
  * __cond_resched_lock() - if a reschedule is pending, drop the given lock,
