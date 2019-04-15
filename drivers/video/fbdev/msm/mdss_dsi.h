@@ -592,6 +592,12 @@ struct mdss_dsi_ctrl_pdata {
 	bool update_phy_timing; /* flag to recalculate PHY timings */
 
 	bool phy_power_off;
+
+	struct notifier_block wake_notif;
+	struct task_struct *wake_thread;
+	struct completion wake_comp;
+	wait_queue_head_t wake_waitq;
+	atomic_t disp_en;
 	
 #ifdef CONFIG_MACH_XIAOMI
 	bool dsi_panel_off_mode;
@@ -605,6 +611,12 @@ struct mdss_dsi_ctrl_pdata {
 	struct delayed_work cmds_work;
 	struct delayed_work panel_dead_report_work;
 #endif
+};
+
+enum {
+	MDSS_DISPLAY_OFF,
+	MDSS_DISPLAY_WAKING,
+	MDSS_DISPLAY_ON
 };
 
 struct dsi_status_data {
