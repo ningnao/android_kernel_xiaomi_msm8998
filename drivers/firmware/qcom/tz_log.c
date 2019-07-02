@@ -553,6 +553,7 @@ static int _disp_tz_interrupt_stats(void)
 	tzdbg.stat[TZDBG_INTERRUPT].data = tzdbg.disp_buf;
 	return len;
 }
+#endif
 
 static int _disp_tz_log_stats_legacy(void)
 {
@@ -638,6 +639,7 @@ static int _disp_log_stats(struct tzdbg_log_t *log,
 	return len;
 }
 
+#ifdef CONFIG_DEBUG_FS
 static int __disp_hyp_log_stats(uint8_t *log,
 			struct hypdbg_log_pos_t *log_start, uint32_t log_len,
 			size_t count, uint32_t buf_idx)
@@ -709,6 +711,7 @@ static int __disp_hyp_log_stats(uint8_t *log,
 	tzdbg.stat[buf_idx].data = tzdbg.disp_buf;
 	return len;
 }
+#endif
 
 static int _disp_tz_log_stats(size_t count)
 {
@@ -722,6 +725,7 @@ static int _disp_tz_log_stats(size_t count)
 				tzdbg.diag_buf->ring_len, count, TZDBG_LOG);
 }
 
+#ifdef CONFIG_DEBUG_FS
 static int _disp_hyp_log_stats(size_t count)
 {
 	static struct hypdbg_log_pos_t log_start = {0};
@@ -733,6 +737,7 @@ static int _disp_hyp_log_stats(size_t count)
 	return __disp_hyp_log_stats(log_ptr, &log_start,
 			tzdbg.hyp_debug_rw_buf_size, count, TZDBG_HYP_LOG);
 }
+#endif
 
 static int _disp_qsee_log_stats(size_t count)
 {
@@ -743,6 +748,7 @@ static int _disp_qsee_log_stats(size_t count)
 			count, TZDBG_QSEE_LOG);
 }
 
+#ifdef CONFIG_DEBUG_FS
 static int _disp_hyp_general_stats(size_t count)
 {
 	int len = 0;
